@@ -1,0 +1,20 @@
+CASE2.
+
+erl -sname sweden -setcookie routy -connect_all false
+routy:start(r1, stockholm).
+routy:start(r2, lund).
+
+r1 ! {add, vilnius, {r3, 'lithuania@DESKTOP-VS4JCHK'}}.
+r2 ! {add, stockholm, {r1, 'sweden@DESKTOP-VS4JCHK'}}.
+r2 ! {add, kaunas, {r4, 'lithuania@DESKTOP-VS4JCHK'}}.
+---
+
+erl -sname lithuania -setcookie routy -connect_all false
+routy:start(r3, vilnius).
+routy:start(r4, kaunas).
+
+r3 ! {add, lund, {r2, 'sweden@DESKTOP-VS4JCHK'}}.
+
+BROADCAST ALL;
+UPDATE ALL;
+r1 ! {send, kaunas, 'hello'}.

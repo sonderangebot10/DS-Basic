@@ -1,0 +1,2 @@
+gnuplot results3.plot 
+epstopdf results3.eps
